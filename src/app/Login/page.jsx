@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./login.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Login() {
   return (
@@ -48,9 +49,9 @@ export default function Login() {
               placeholder="Digite sua senha"
             />
           </div>
-          <button type="submit" className={styles.button}>
+          <Link href="/" className={styles.button}>
             Entrar
-          </button>
+          </Link>
         </form>
       </div>
     </div>

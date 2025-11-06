@@ -23,13 +23,13 @@ export default function SideHeader() {
         <nav className={styles.nav}>
           <ul className={styles.navList}>
             <li className={styles.navItem}>
-              <Link href="/" className={styles.navLink}>
-                Home
+            <Link href="/dashboard" className={styles.navLink}>
+            Dashboard
               </Link>
             </li>
             <li className={styles.navItem}>
-            <Link href="/" className={styles.navLink}>
-            Dashboard
+            <Link href="/pageTask" className={styles.navLink}>
+            Feed
               </Link>
             </li>
             <li className={styles.navItem}>
