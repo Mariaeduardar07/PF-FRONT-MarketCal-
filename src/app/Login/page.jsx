@@ -80,87 +80,88 @@ export default function Login() {
 
   return (
     <div className={styles.containerLogin}>
-      {/* ESQUERDA */}
+      {/* LADO ESQUERDO - BRANDING */}
       <div className={styles.left}>
         <div className={styles.intro}>
-          <h1 className={styles.title}>Bem vindo(a) ao MarketCal</h1>
+          <h1 className={styles.title}>Bem-vindo ao MarketCal</h1>
           <p className={styles.text}>
-            Sua estratégia de social media, organizada para performar
+            Organize sua estratégia de social media e alcance resultados extraordinários.
           </p>
         </div>
       </div>
 
-      {/* DIREITA */}
+      {/* LADO DIREITO - FORMULÁRIO */}
       <div className={styles.right}>
-        <Image
-          src="/image/logo.png"
-          alt="Logo do MarketCal"
-          width={250}
-          height={250}
-          className={styles.logoImg}
-          priority
-        />
-        <form className={styles.form} onSubmit={handleLogin}>
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className={styles.input}
-              placeholder="seu@email.com"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              disabled={loading}
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Senha
-            </label>
-            <div className={styles.passwordWrapper}>
+        <div className={styles.formCard}>
+          <Image
+            src="/image/logo.png"
+            alt="Logo do MarketCal"
+            width={280}
+            height={280}
+            className={styles.logoImg}
+            priority
+          />
+          <form className={styles.form} onSubmit={handleLogin}>
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.label}>
+                E-mail
+              </label>
               <input
-                type={showPassword ? "text" : "password"}
-                id="password"
+                type="email"
+                id="email"
                 className={styles.input}
-                placeholder="Digite sua senha"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                placeholder="seu@email.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
                 disabled={loading}
               />
-              <button
-                type="button"
-                className={styles.togglePassword}
-                onClick={() => setShowPassword(!showPassword)}
-                disabled={loading}
-              >
-                {showPassword ? "👁️" : "👁️‍🗨️"}
-              </button>
             </div>
-          </div>
 
-          {error && <p className={styles.errorMessage}>{error}</p>}
-          {success && <p className={styles.successMessage}>{success}</p>}
+            <div className={styles.formGroup}>
+              <label htmlFor="password" className={styles.label}>
+                Senha
+              </label>
+              <div className={styles.passwordWrapper}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className={styles.input}
+                  placeholder="Digite sua senha"
+                  value={form.password}
+                  onChange={(e) => setForm({ ...form, password: e.target.value })}
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  className={styles.togglePassword}
+                  onClick={() => setShowPassword(!showPassword)}
+                  disabled={loading}
+                >
+                  {showPassword ? "👁️" : "👁️‍🗨️"}
+                </button>
+              </div>
+            </div>
 
-          <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? (
-              <>
-                <span className={styles.spinner}></span> Entrando...
-              </>
-            ) : (
-              "Entrar"
-            )}
-          </button>
+            {error && <p className={styles.errorMessage}>{error}</p>}
+            {success && <p className={styles.successMessage}>{success}</p>}
 
-          <p style={{ marginTop: "15px", textAlign: "center" }}>
-            Não tem conta?{" "}
-            <Link href="/cadastro" style={{ color: "#2d6962", fontWeight: "bold" }}>
-              Faça cadastro
-            </Link>
-          </p>
-        </form>
+            <button type="submit" className={styles.button} disabled={loading}>
+              {loading ? (
+                <>
+                  <span className={styles.spinner}></span>
+                  Entrando...
+                </>
+              ) : (
+                "Entrar"
+              )}
+            </button>
+
+            <p className={styles.registerLink}>
+              Não tem uma conta?{" "}
+              <Link href="/cadastro">Criar conta</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
