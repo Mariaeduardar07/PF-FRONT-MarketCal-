@@ -1,152 +1,222 @@
+/* ===== LOGIN - DESIGN LIMPO E PROFISSIONAL ===== */
+
 .containerLogin {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  height: 100vh;
+  background: #ffffff;
+  overflow: hidden;
 }
 
+/* ===== LADO ESQUERDO - BRANDING ===== */
 .left {
-  flex: 0.5;
-  background-color: #84e7d289; /* cor da esquerda */
+  flex: 0 0 35%;
+  max-width: 35%;
+  background: linear-gradient(160deg, #84e7d2 0%, #5dd4c0 50%, #47c4ac 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 35%;
-  border-radius: 0 80px 80px 0;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 60px 60px 0;
+} 
+
+/* Círculos decorativos sutis */
+.left::before {
+  content: '';
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.176);
+  top: -100px;
+  left: -100px;
+}
+
+.left::after {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.176);
+  bottom: -80px;
+  right: -80px;
 }
 
 .intro {
   text-align: center;
-  max-width: 720px;
-  width: 100%;
+  z-index: 1;
+  max-width: 320px;
 }
 
 .title {
   font-size: 2rem;
   font-weight: 700;
-  color: #2d6962;
-  margin: 0 0 0.5rem 0;
+  color: #ffffff;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
 }
 
 .text {
   font-size: 1rem;
-  color: rgba(0, 0, 0, 0.509);
+  color: rgba(255, 255, 255, 0.9);
   margin: 0;
+  line-height: 1.6;
+  font-weight: 400;
 }
 
+/* ===== LADO DIREITO - FORMULÁRIO ===== */
 .right {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  width: 65%;
-  background-color: #f5f5f5;
   padding: 2rem;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.formCard {
+  width: 100%;
+  max-width: 340px;
+}
+
+.logoImg {
+  display: block;
+  margin: 0 auto 0 auto;
+  width: 245px;
+  height: 245px;
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111111;
+  margin: 0 0 0.3rem 0;
+  text-align: center;
+}
+
+.formSubtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
 }
 
 .form {
   width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
 }
 
 .formGroup {
-  display: flex;
-  flex-direction: column;
   margin-bottom: 1rem;
 }
 
 .label {
-  font-size: 0.875rem;
-  color: #2d6962;
-  font-weight: 600;
-  margin-bottom: 0.3rem;
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.4rem;
 }
 
 .input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #5cb3a0;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 0.7rem 0.875rem;
+  font-size: 0.9rem;
+  color: #111111;
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.input:hover {
+  border-color: #d1d5db;
+}
+
 .input:focus {
-  outline: none;
-  border-color: #2d6962;
+  background: #ffffff;
+  border-color: #84e7d2;
   box-shadow: 0 0 0 3px rgba(132, 231, 210, 0.2);
 }
 
 .input:disabled {
-  background-color: #e9ecef;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 .passwordWrapper {
   position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .passwordWrapper .input {
-  padding-right: 2.5rem;
-  width: 100%;
+  padding-right: 3rem;
 }
 
 .togglePassword {
   position: absolute;
-  right: 0.75rem;
+  right: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0.5rem;
-  transition: opacity 0.3s ease;
+  font-size: 1.125rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  padding: 0.25rem;
 }
 
 .togglePassword:hover:not(:disabled) {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .togglePassword:disabled {
   cursor: not-allowed;
-  opacity: 0.5;
 }
 
+/* ===== MENSAGENS ===== */
 .errorMessage {
-  color: #dc3545;
-  background-color: #f8d7da;
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 0.65rem 0.875rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
   margin-bottom: 1rem;
-  font-size: 0.875rem;
-  border-left: 4px solid #dc3545;
+  border: 1px solid #fecaca;
 }
 
 .successMessage {
-  color: #2d6962;
-  background-color: rgb(238, 255, 242);
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
+  background: #f0fdf4;
+  color: #166534;
+  padding: 0.65rem 0.875rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
   margin-bottom: 1rem;
-  font-size: 0.875rem;
-  border-left: 4px solid #2d6962;
+  border: 1px solid #bbf7d0;
 }
 
+/* ===== BOTÃO ===== */
 .button {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background-color: #84e7d2;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 0.7rem 1.25rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  color: #ffffff;
+  background: #84e7d2;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,32 +224,342 @@
 }
 
 .button:hover:not(:disabled) {
-  background-color: #63cbbf;
-  transform: translateY(-2px);
+  background: #6ddfc7;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(132, 231, 210, 0.4);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 .button:disabled {
-  background-color: #a8d9d0;
+  background: #d1d5db;
   cursor: not-allowed;
-  transform: none;
 }
 
 .spinner {
-  display: inline-block;
   width: 1rem;
   height: 1rem;
   border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: white;
+  border-top-color: #ffffff;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
+  to { transform: rotate(360deg); }
+}
+
+/* ===== LINK ===== */
+.registerLink {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.registerLink a {
+  color: #2d6962;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.registerLink a:hover {
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVO ===== */
+
+/* Notebook / Tablet Landscape */
+@media (max-width: 1200px) {
+  .containerLogin {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .left {
+    flex: 0 0 32%;
+    max-width: 32%;
+    padding: 1.5rem;
+    border-radius: 0 50px 50px 0;
+  }
+
+  .left::before {
+    width: 350px;
+    height: 350px;
+    top: -120px;
+    left: -120px;
+  }
+
+  .left::after {
+    width: 280px;
+    height: 280px;
+    bottom: -100px;
+    right: -100px;
+  }
+
+  .intro {
+    max-width: 320px;
+  }
+
+  .title {
+    font-size: 1.85rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .right {
+    padding: 1.5rem 2rem;
+  }
+
+  .formCard {
+    max-width: 340px;
+  }
+
+  .logoImg {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 0.75rem;
+  }
+
+  .formTitle {
+    font-size: 1.35rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .formSubtitle {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+
+  .label {
+    font-size: 0.8rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .input {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+
+  .errorMessage,
+  .successMessage {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .button {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 8px;
+  }
+
+  .registerLink {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
   }
 }
 
-.logoImg {
-  margin-bottom: 2rem;
+/* Notebook Pequeno */
+@media (max-width: 1024px) {
+  .left {
+    flex: 0 0 30%;
+    max-width: 30%;
+    padding: 1.25rem;
+    border-radius: 0 45px 45px 0;
+  }
+
+  .left::before,
+  .left::after {
+    display: none;
+  }
+
+  .intro {
+    max-width: 280px;
+  }
+
+  .title {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .text {
+    font-size: 0.85rem;
+  }
+
+  .right {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .formCard {
+    max-width: 320px;
+  }
+
+  .logoImg {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0.5rem;
+  }
+
+  .formTitle {
+    font-size: 1.25rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .formSubtitle {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .formGroup {
+    margin-bottom: 0.85rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .input {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .errorMessage,
+  .successMessage {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .button {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .spinner {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .registerLink {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablet Portrait */
+@media (max-width: 900px) {
+  .containerLogin {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .left {
+    flex: 0 0 auto;
+    max-width: 100%;
+    min-height: 180px;
+    padding: 2rem;
+    border-radius: 0 0 50px 50px;
+  }
+
+  .left::before,
+  .left::after {
+    display: none;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .text {
+    font-size: 0.95rem;
+  }
+
+  .right {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+
+  .formCard {
+    max-width: 100%;
+  }
+
+  .logoImg {
+    width: 110px !important;
+    height: 110px !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .formTitle {
+    font-size: 1.35rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .formSubtitle {
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+
+  .registerLink {
+    margin-top: 1.25rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .left {
+    min-height: 150px;
+    padding: 1.5rem;
+    border-radius: 0 0 35px 35px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .text {
+    font-size: 0.875rem;
+  }
+
+  .right {
+    padding: 1.25rem;
+  }
+
+  .logoImg {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .formTitle {
+    font-size: 1.25rem;
+  }
+
+  .input {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.95rem;
+  }
+
+  .button {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
 }

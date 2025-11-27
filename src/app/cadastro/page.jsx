@@ -104,132 +104,126 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.containerRegister}>
-      {/* ESQUERDA */}
-      <div className={styles.right}>
-        <Image
-          src="/image/logo.png"
-          alt="Logo do MarketCal"
-          width={250}
-          height={250}
-          className={styles.logoImg}
-          priority
-        />
-        <form className={styles.form} onSubmit={handleRegister}>
-          <div className={styles.formGroup}>
-            <label htmlFor="name" className={styles.label}>
-              Nome Completo
-            </label>
-            <input
-              type="text"
-              id="name"
-              className={styles.input}
-              placeholder="Seu nome completo"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              disabled={loading}
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.label}>
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              className={styles.input}
-              placeholder="seu@email.com"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              disabled={loading}
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Senha
-            </label>
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                className={styles.input}
-                placeholder="Digite sua senha (mín. 6 caracteres)"
-                value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                disabled={loading}
-              />
-              <button
-                type="button"
-                className={styles.togglePassword}
-                onClick={() => setShowPassword(!showPassword)}
-                disabled={loading}
-              >
-                {showPassword ? "👁️" : "👁️‍🗨️"}
-              </button>
-            </div>
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword" className={styles.label}>
-              Confirmar Senha
-            </label>
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                className={styles.input}
-                placeholder="Confirme sua senha"
-                value={form.confirmPassword}
-                onChange={(e) =>
-                  setForm({ ...form, confirmPassword: e.target.value })
-                }
-                disabled={loading}
-              />
-              <button
-                type="button"
-                className={styles.togglePassword}
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                disabled={loading}
-              >
-                {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
-              </button>
-            </div>
-            {form.confirmPassword && form.password !== form.confirmPassword && (
-              <p className={styles.warningMessage}>As senhas não coincidem</p>
-            )}
-          </div>
-
-          {error && <p className={styles.errorMessage}>{error}</p>}
-          {success && <p className={styles.successMessage}>{success}</p>}
-
-          <button type="submit" className={styles.button} disabled={loading}>
-            {loading ? (
-              <>
-                <span className={styles.spinner}></span> Criando conta...
-              </>
-            ) : (
-              "Criar Conta"
-            )}
-          </button>
-
-          <p style={{ marginTop: "15px", textAlign: "center" }}>
-            Já tem conta?{" "}
-            <Link href="/Login" style={{ color: "#2d6962", fontWeight: "bold" }}>
-              Faça login
-            </Link>
-          </p>
-        </form>
-      </div>
-
-      {/* DIREITA */}
+    <div className={styles.container}>
+      {/* LADO ESQUERDO - BRANDING */}
       <div className={styles.left}>
         <div className={styles.intro}>
-          <h1 className={styles.title}>Crie sua conta</h1>
+          <h1 className={styles.title}>Junte-se ao MarketCal</h1>
           <p className={styles.text}>
-            Junte-se ao MarketCal e organize sua estratégia de social media
+            Crie sua conta e comece a organizar suas estratégias de social media hoje mesmo.
           </p>
+        </div>
+      </div>
+
+      {/* LADO DIREITO - FORMULÁRIO */}
+      <div className={styles.right}>
+        <div className={styles.formCard}>
+          <Image
+            src="/image/logo.png"
+            alt="Logo do MarketCal"
+            width={245}
+            height={245}
+            className={styles.logo}
+            priority
+          />
+          
+          <form className={styles.form} onSubmit={handleRegister}>
+            <div className={styles.formGroup}>
+              <label htmlFor="name" className={styles.label}>Nome completo</label>
+              <input
+                type="text"
+                id="name"
+                className={styles.input}
+                placeholder="Seu nome"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                disabled={loading}
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.label}>E-mail</label>
+              <input
+                type="email"
+                id="email"
+                className={styles.input}
+                placeholder="seu@email.com"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                disabled={loading}
+              />
+            </div>
+
+            <div className={styles.row}>
+              <div className={styles.formGroup}>
+                <label htmlFor="password" className={styles.label}>Senha</label>
+                <div className={styles.passwordWrapper}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    className={styles.input}
+                    placeholder="Mín. 6 caracteres"
+                    value={form.password}
+                    onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    className={styles.togglePassword}
+                    onClick={() => setShowPassword(!showPassword)}
+                    disabled={loading}
+                  >
+                    <span>{showPassword ? "Ocultar" : "Ver"}</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="confirmPassword" className={styles.label}>Confirmar</label>
+                <div className={styles.passwordWrapper}>
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirmPassword"
+                    className={styles.input}
+                    placeholder="Repita a senha"
+                    value={form.confirmPassword}
+                    onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+                    disabled={loading}
+                  />
+                  <button
+                    type="button"
+                    className={styles.togglePassword}
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    disabled={loading}
+                  >
+                    <span>{showConfirmPassword ? "Ocultar" : "Ver"}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {form.confirmPassword && form.password !== form.confirmPassword && (
+              <p className={styles.warning}>As senhas não coincidem</p>
+            )}
+
+            {error && <p className={styles.error}>{error}</p>}
+            {success && <p className={styles.success}>{success}</p>}
+
+            <button type="submit" className={styles.btn} disabled={loading}>
+              {loading ? (
+                <>
+                  <span className={styles.spinner}></span>
+                  Criando...
+                </>
+              ) : (
+                "Criar conta"
+              )}
+            </button>
+
+            <p className={styles.link}>
+              Já tem uma conta? <Link href="/Login">Entrar</Link>
+            </p>
+          </form>
         </div>
       </div>
     </div>
