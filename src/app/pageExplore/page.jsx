@@ -1,18 +1,65 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './pageExplore.module.css';
 import CardInflu from '@/components/CardInflu';
 import Header from '@/components/Header';
 import SideHeader from '@/components/sideHeader';
 import InfluencerDetail from '@/components/InfluencerDetail';
-import { mockInfluencers } from '@/data/mockData';
+import { fetchWithAuth } from '@/config/api';
 
 export default function PageExplore() {
   const [filter, setFilter] = useState('all');
   const [selectedInfluencer, setSelectedInfluencer] = useState(null);
+  const [influencers, setInfluencers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const allInfluencers = [...mockInfluencers.recent, ...mockInfluencers.all];
+  useEffect(() => {
+    const fetchInfluencers = async () => {
+      try {
+        setLoading(true);
+        const response = await fetchWithAuth('/users');
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || `Erro ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Users carregados:', data);
+        
+        // Mapear os dados dos usuários para o formato esperado
+        const mappedData = Array.isArray(data) ? data.map(user => ({
+          id: user.id || user._id,
+          name: user.name || user.username || 'Sem nome',
+          avatar: user.avatar || user.profileImage || '/image/logo.png',
+          category: user.category || user.niche || 'Influencer',
+          followers: user.followers || user.followersCount || '0',
+          engagement: user.engagement || user.engagementRate || '0%',
+          platform: user.platform || user.mainPlatform || 'Instagram',
+          platforms: user.platforms || [user.platform || 'Instagram'],
+          verified: user.verified || false,
+          location: user.location || 'Brasil',
+          ...user
+        })) : [];
+        
+        setInfluencers(mappedData);
+        setError(null);
+      } catch (err) {
+        console.error('Erro ao carregar users:', err);
+        setError(err.message || 'Erro ao carregar usuários');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInfluencers();
+  }, []);
+
+  // Separar influencers recentes (últimos 5) e todos os outros
+  const recentInfluencers = influencers.slice(0, 5);
+  const allInfluencers = influencers.slice(5);
 
   const handleCardClick = (influencer) => {
     setSelectedInfluencer(influencer);
@@ -32,54 +79,77 @@ export default function PageExplore() {
         <div className={styles.pageContainer}>
           <div className={styles.contentWrapper}>
             
-            <section className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Recent Influencers</h2>
-                <span className={styles.badge}>{mockInfluencers.recent.length}</span>
+            {loading ? (
+              <div className={styles.loadingContainer}>
+                <p>Carregando influenciadores...</p>
               </div>
-              
-              <div className={styles.cardsGrid}>
-                {mockInfluencers.recent.map((influencer) => (
-                  <CardInflu
-                    key={influencer.id}
-                    name={influencer.name}
-                    avatar={influencer.avatar}
-                    category={influencer.category}
-                    followers={influencer.followers}
-                    engagement={influencer.engagement}
-                    platform={influencer.platform}
-                    platforms={influencer.platforms}
-                    verified={influencer.verified}
-                    onClick={() => handleCardClick(influencer)}
-                  />
-                ))}
+            ) : error ? (
+              <div className={styles.errorContainer}>
+                <p>Erro: {error}</p>
               </div>
-            </section>
+            ) : (
+              <>
+                {/* Seção de Influenciadores Recentes */}
+                {recentInfluencers.length > 0 && (
+                  <section className={styles.section}>
+                    <div className={styles.sectionHeader}>
+                      <h2 className={styles.sectionTitle}>Recent Influencers</h2>
+                      <span className={styles.badge}>{recentInfluencers.length}</span>
+                    </div>
+                    
+                    <div className={styles.cardsGrid}>
+                      {recentInfluencers.map((influencer) => (
+                        <CardInflu
+                          key={influencer.id}
+                          name={influencer.name}
+                          avatar={influencer.avatar}
+                          category={influencer.category}
+                          followers={influencer.followers}
+                          engagement={influencer.engagement}
+                          platform={influencer.platform}
+                          platforms={influencer.platforms}
+                          verified={influencer.verified}
+                          onClick={() => handleCardClick(influencer)}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
 
-            {/* Seção de Todos os Influenciadores */}
-            <section className={styles.section}>
-              <div className={styles.sectionHeader}>
-                <h2 className={styles.sectionTitle}>Influencers</h2>
-                <span className={styles.badge}>{mockInfluencers.all.length}</span>
-              </div>
-              
-              <div className={styles.cardsGrid}>
-                {mockInfluencers.all.map((influencer) => (
-                  <CardInflu
-                    key={influencer.id}
-                    name={influencer.name}
-                    avatar={influencer.avatar}
-                    category={influencer.category}
-                    followers={influencer.followers}
-                    engagement={influencer.engagement}
-                    platform={influencer.platform}
-                    platforms={influencer.platforms}
-                    verified={influencer.verified}
-                    onClick={() => handleCardClick(influencer)}
-                  />
-                ))}
-              </div>
-            </section>
+                {/* Seção de Todos os Influenciadores */}
+                {allInfluencers.length > 0 && (
+                  <section className={styles.section}>
+                    <div className={styles.sectionHeader}>
+                      <h2 className={styles.sectionTitle}>Influencers</h2>
+                      <span className={styles.badge}>{allInfluencers.length}</span>
+                    </div>
+                    
+                    <div className={styles.cardsGrid}>
+                      {allInfluencers.map((influencer) => (
+                        <CardInflu
+                          key={influencer.id}
+                          name={influencer.name}
+                          avatar={influencer.avatar}
+                          category={influencer.category}
+                          followers={influencer.followers}
+                          engagement={influencer.engagement}
+                          platform={influencer.platform}
+                          platforms={influencer.platforms}
+                          verified={influencer.verified}
+                          onClick={() => handleCardClick(influencer)}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                )}
+
+                {influencers.length === 0 && (
+                  <div className={styles.emptyContainer}>
+                    <p>Nenhum influenciador encontrado</p>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

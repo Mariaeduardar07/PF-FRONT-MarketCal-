@@ -1,4 +1,4 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4001";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
 export async function fetchWithAuth(endpoint, options = {}) {
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
