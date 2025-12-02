@@ -9,6 +9,7 @@ import PostsChart from "@/components/PostsChart";
 import SocialAccountsOverview from "@/components/SocialAccountsOverview";
 import UpcomingPosts from "@/components/UpcomingPosts";
 import PostStatusDistribution from "@/components/PostStatusDistribution";
+import MiniCalendar from "@/components/MiniCalendar";
 
 export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -67,14 +68,6 @@ export default function Dashboard() {
         
         <div className={styles.pageContainer}>
           <div className={styles.contentWrapper}>
-            
-            {/* Header Section */}
-            <section className={styles.headerSection}>
-              <div>
-                <h1 className={styles.pageTitle}>Dashboard</h1>
-                <p className={styles.pageSubtitle}>Acompanhe o desempenho das suas contas sociais em tempo real</p>
-              </div>
-            </section>
 
             {/* Loading State */}
             {loading && (
@@ -98,31 +91,60 @@ export default function Dashboard() {
             {/* Dashboard Content */}
             {!loading && !error && dashboardData && (
               <>
-                {/* Stats Grid */}
-                <section className={styles.statsSection}>
-                  <div className={styles.statsGrid}>
-                    <DashboardStats stats={dashboardData?.stats} />
+                {/* Overview Section - Layout Principal */}
+                <section className={styles.overviewSection}>
+                  {/* Card Grande de Overview (70%) */}
+                  <div className={styles.overviewCard}>
+                    <div className={styles.overviewHeader}>
+                      <div>
+                        <h1 className={styles.overviewTitle}>Visão Geral</h1>
+                        <p className={styles.overviewSubtitle}>Acompanhe suas postagens em tempo real</p>
+                      </div>
+                    </div>
+                    
+                    {/* Gráfico de Linha dentro do Overview */}
+                    <div className={styles.overviewChart}>
+                      <PostsChart data={dashboardData?.postsTimeline} isOverview={true} />
+                    </div>
+                    
+                    {/* Métricas na parte inferior */}
+                    <div className={styles.overviewMetrics}>
+                      <DashboardStats stats={dashboardData?.stats} variant="overview" />
+                    </div>
+                  </div>
+
+                  {/* Cards de Ação Rápida (30%) */}
+                  <div className={styles.quickActions}>
+                    {/* Calendário */}
+                    <div className={styles.calendarCard}>
+                      <MiniCalendar />
+                    </div>
+
+                    {/* Ações */}
+                    
+                    <div className={styles.actionCardAlt}>
+                      <div className={styles.actionIcon}>🔗</div>
+                      <h3 className={styles.actionTitle}>Conectar</h3>
+                      <p className={styles.actionDesc}>Nova rede social</p>
+                      <button className={styles.actionBtnAlt}>Adicionar</button>
+                    </div>
                   </div>
                 </section>
 
-                {/* Charts Grid */}
-                <section className={styles.chartsSection}>
-                  <div className={styles.chartsGrid}>
-                    <div className={styles.chartCard}>
-                      <PostsChart data={dashboardData?.postsTimeline} />
-                    </div>
-                    <div className={styles.chartCard}>
-                      <PostStatusDistribution data={dashboardData?.statusDistribution} />
-                    </div>
+                {/* Seção Secundária */}
+                <section className={styles.secondarySection}>
+                  {/* Distribuição de Status - Card Menor */}
+                  <div className={styles.chartCardSmall}>
+                    <PostStatusDistribution data={dashboardData?.statusDistribution} />
+                  </div>
+
+                  {/* Contas Sociais - Card Maior */}
+                  <div className={styles.chartCard}>
+                    <SocialAccountsOverview accounts={dashboardData?.accounts} />
                   </div>
                 </section>
 
-                {/* Social Accounts */}
-                <section className={styles.section}>
-                  <SocialAccountsOverview accounts={dashboardData?.accounts} />
-                </section>
-
-                {/* Upcoming Posts */}
+                {/* Próximas Postagens */}
                 <section className={styles.section}>
                   <UpcomingPosts posts={dashboardData?.upcomingPosts} />
                 </section>
