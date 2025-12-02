@@ -14,6 +14,8 @@ const CardInflu = ({
 }) => {
   // Função para renderizar o ícone da plataforma
   const getPlatformIcon = (platformName) => {
+    if (!platformName) return null;
+    
     switch(platformName.toLowerCase()) {
       case 'instagram':
         return (
