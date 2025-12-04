@@ -106,8 +106,6 @@ export default function PageExplore() {
                           name={influencer.name}
                           avatar={influencer.avatar}
                           category={influencer.category}
-                          followers={influencer.followers}
-                          engagement={influencer.engagement}
                           platform={influencer.platform}
                           platforms={influencer.platforms}
                           verified={influencer.verified}
@@ -133,8 +131,6 @@ export default function PageExplore() {
                           name={influencer.name}
                           avatar={influencer.avatar}
                           category={influencer.category}
-                          followers={influencer.followers}
-                          engagement={influencer.engagement}
                           platform={influencer.platform}
                           platforms={influencer.platforms}
                           verified={influencer.verified}

@@ -42,25 +42,6 @@ const InfluencerDetail = ({ influencer, onClose }) => {
           </div>
         </div>
 
-        <div className={styles.statsGrid}>
-          <div className={styles.statCard}>
-            <span className={styles.statLabel}>Seguidores</span>
-            <span className={styles.statValue}>{influencer.followers}</span>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statLabel}>Engajamento</span>
-            <span className={styles.statValue}>{influencer.engagement}</span>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statLabel}>Alcance Médio</span>
-            <span className={styles.statValue}>{influencer.avgViews || '2.5M'}</span>
-          </div>
-          <div className={styles.statCard}>
-            <span className={styles.statLabel}>Total de Posts</span>
-            <span className={styles.statValue}>{influencer.totalPosts || '1.5K'}</span>
-          </div>
-        </div>
-
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>Público Alvo</h2>
           <div className={styles.audienceGrid}>

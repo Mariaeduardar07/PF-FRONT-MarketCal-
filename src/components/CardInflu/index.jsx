@@ -6,8 +6,6 @@ const CardInflu = ({
   name, 
   avatar, 
   category, 
-  followers, 
-  engagement, 
   platform, 
   verified,
   platforms,
@@ -132,18 +130,6 @@ const CardInflu = ({
         </div>
         
         <div className={styles.cardBody}>
-          <div className={styles.statsContainer}>
-            <div className={styles.statItem}>
-              <span className={styles.statLabel}>Seguidores</span>
-              <span className={styles.statValue}>{followers}</span>
-            </div>
-            <div className={styles.statDivider}></div>
-            <div className={styles.statItem}>
-              <span className={styles.statLabel}>Engajamento</span>
-              <span className={styles.statValue}>{engagement}</span>
-            </div>
-          </div>
-          
           <div className={styles.platformBadge}>
             <span className={styles.platformText}>{platform}</span>
           </div>
