@@ -2,78 +2,57 @@
 
 import { useState, useEffect } from "react";
 import styles from "./header.module.css";
+import { fetchWithAuth } from "@/config/api";
 
 export default function Header() {
   const [searchValue, setSearchValue] = useState("");
   const [userName, setUserName] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    try {
-      const extractName = (u) => {
-        if (!u) return null;
-        if (typeof u === "string") {
-          const isEmail = u.includes("@");
-          return isEmail ? u.split("@")[0] : u;
-        }
-        return (
-          u.name || u.nome || u.fullName || u.firstName || u.username || (u.email && u.email.split("@")[0]) || null
-        );
-      };
-
-      const tryKeys = ["user", "usuario", "userExists", "name", "username", "userData", "profile"];
-      console.debug(
-        "[Header] tentando keys:",
-        tryKeys.map((k) => ({ key: k, value: localStorage.getItem(k) }))
-      );
-
-      for (const key of tryKeys) {
-        const raw = localStorage.getItem(key);
-        if (!raw) continue;
-
-        try {
-          const parsed = JSON.parse(raw);
-          console.debug("[Header] parsed", key, parsed);
-          const found = extractName(parsed);
-          if (found) {
-            console.debug("[Header] name found from", key, found);
-            setUserName(found);
-            return;
-          }
-        } catch (e) {
-          console.debug("[Header] raw string for", key, raw);
-          const found = extractName(raw);
-          if (found) {
-            console.debug("[Header] name found from raw", key, found);
-            setUserName(found);
-            return;
+    const loadUserData = async () => {
+      try {
+        // Pegar nome do usuário do localStorage
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+          const user = JSON.parse(userStr);
+          const name = user.name || user.username;
+          if (name) {
+            setUserName(name);
           }
         }
-      }
 
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const payload = token.split(".")[1];
-          if (payload) {
-            const json = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
-            console.debug("[Header] decoded token payload", json);
-            const fromToken = extractName(json);
-            if (fromToken) {
-              setUserName(fromToken);
-              return;
+        // Buscar a imagem do influencer/conta social
+        const response = await fetchWithAuth('/social-accounts');
+        if (response.ok) {
+          const accounts = await response.json();
+          console.log('Contas sociais recebidas:', accounts);
+          
+          if (Array.isArray(accounts) && accounts.length > 0) {
+            // Usar a primeira conta ou buscar pelo nome do usuário
+            const userStr2 = localStorage.getItem("user");
+            const userName = userStr2 ? JSON.parse(userStr2).name : null;
+            
+            const account = userName 
+              ? accounts.find(acc => acc.name?.toLowerCase().includes(userName.toLowerCase()))
+              : accounts[0];
+            
+            console.log('Conta selecionada:', account);
+            
+            if (account && account.imageUrl) {
+              console.log('✅ Imagem encontrada:', account.imageUrl);
+              setUserAvatar(account.imageUrl);
             }
           }
-        } catch (e) {
-          console.debug("[Header] não foi possível decodificar token JWT", e);
         }
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
       }
+    };
 
-      console.debug("[Header] nenhum nome encontrado no localStorage");
-    } catch (err) {
-      console.error("Erro lendo usuário do localStorage:", err);
-    }
+    loadUserData();
   }, []);
 
   return (
@@ -121,7 +100,24 @@ export default function Header() {
           </button>
 
           <button className={styles.iconButton}>
-            <svg className={styles.icon} viewBox="0 0 24 24" fill="currentColor">
+            {userAvatar ? (
+              <img 
+                src={userAvatar} 
+                alt={userName || 'User'} 
+                className={styles.userAvatar}
+                onError={(e) => {
+                  // Se a imagem falhar ao carregar, mostra o ícone padrão
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'block';
+                }}
+              />
+            ) : null}
+            <svg 
+              className={styles.icon} 
+              viewBox="0 0 24 24" 
+              fill="currentColor"
+              style={{ display: userAvatar ? 'none' : 'block' }}
+            >
               <circle cx="12" cy="12" r="10" />
               <circle cx="12" cy="10" r="2.5" fill="white" />
               <path d="M12 15c-2 0-3 1-3 2v2h6v-2c0-1-1-2-3-2" fill="white" />

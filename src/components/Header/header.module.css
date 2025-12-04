@@ -130,6 +130,21 @@
  flex-shrink: 0;
 }
 
+.userAvatar {
+ width: 32px;
+ height: 32px;
+ border-radius: 50%;
+ object-fit: cover;
+ border: 2px solid #5dd4c0;
+ cursor: pointer;
+ transition: all 0.2s ease;
+}
+
+.userAvatar:hover {
+ border-color: #47c4ac;
+ transform: scale(1.05);
+}
+
 @media (max-width: 768px) {
  .header {
   flex-wrap: wrap;
