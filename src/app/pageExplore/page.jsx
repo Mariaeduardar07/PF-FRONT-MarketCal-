@@ -27,7 +27,7 @@ export default function PageExplore() {
         }
         
         const data = await response.json();
-        console.log('🔍 Dados recebidos da API /social-accounts:', data);
+        console.log('Influencers recebidos:', data);
         
         // Mapear os dados das contas sociais para o formato esperado
         const mappedData = Array.isArray(data) ? data.map(account => ({
@@ -45,7 +45,6 @@ export default function PageExplore() {
           ...account
         })) : [];
         
-        console.log('✅ Dados mapeados com avatares:', mappedData.map(u => ({ name: u.name, avatar: u.avatar })));
         setInfluencers(mappedData);
         setError(null);
       } catch (err) {
